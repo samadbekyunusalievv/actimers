@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -383,41 +384,35 @@ class TemplatesPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Image.asset(
-                template['icon'],
-                width: 44.r,
-                height: 44.r,
-              ),
-              SizedBox(width: 16.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    template['name'],
-                    style: TextStyle(
-                      fontFamily: 'SF Pro',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.sp,
-                      height: 24 / 16,
-                      color: Color(0xFF000000),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Row(
+          Expanded(
+            child: Row(
+              children: [
+                Image.asset(
+                  template['icon'],
+                  width: 44.r,
+                  height: 44.r,
+                ),
+                SizedBox(width: 16.w),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.timer_outlined,
-                        size: 18.r,
-                        color: Color(0xFF777F89),
+                      AutoSizeText(
+                        template['name'],
+                        style: TextStyle(
+                          fontFamily: 'SF Pro',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.sp,
+                          height: 24 / 16,
+                          color: Color(0xFF000000),
+                        ),
+                        minFontSize: 12,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
-                        width: 3.w,
-                      ),
+                      SizedBox(height: 5.h),
                       Text(
                         '${template['hours'].toString().padLeft(3, '0')}:00:00',
                         style: TextStyle(
@@ -430,33 +425,21 @@ class TemplatesPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
           IconButton(
-            icon: Icon(
-              Icons.add_circle,
-              color: Colors.green,
-              size: 30.r,
-            ),
+            icon: Icon(Icons.add_circle, color: Colors.green, size: 30.r),
             onPressed: () async {
               final isPremium = await _getPremiumStatus();
               if (isPremium) {
-                onAddTimer(
-                  template['name'],
-                  template['hours'],
-                  0,
-                  0,
-                  category,
-                  template['icon'],
-                );
+                onAddTimer(template['name'], template['hours'], 0, 0, category,
+                    template['icon']);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                      '${template['name']} added to $category group!',
-                    ),
-                  ),
+                      content: Text(
+                          '${template['name']} added to $category group!')),
                 );
               } else {
                 await _showPremiumDialog(context);

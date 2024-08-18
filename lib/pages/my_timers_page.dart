@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:actimers/pages/timer_detail_screen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -294,54 +295,62 @@ class _MyTimersPageState extends State<MyTimersPage>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        timer['iconPath'],
-                        width: 44.r,
-                        height: 44.r,
-                      ),
-                      SizedBox(width: 16.w),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            timer['name'],
-                            style: TextStyle(
-                              fontFamily: 'SF Pro',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.sp,
-                              height: 24 / 16,
-                              color: Color(0xFF000000),
-                            ),
-                          ),
-                          SizedBox(height: 5.h),
-                          Row(
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          timer['iconPath'],
+                          width: 44.r,
+                          height: 44.r,
+                        ),
+                        SizedBox(width: 16.w),
+                        Flexible(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.timer_outlined,
-                                size: 18.r,
-                                color: Color(0xFF777F89),
-                              ),
-                              SizedBox(width: 3.w),
-                              Text(
-                                '${(remainingSeconds ~/ 3600).toString().padLeft(2, '0')}:'
-                                '${((remainingSeconds % 3600) ~/ 60).toString().padLeft(2, '0')}:'
-                                '${(remainingSeconds % 60).toString().padLeft(2, '0')}',
+                              AutoSizeText(
+                                timer['name'],
                                 style: TextStyle(
                                   fontFamily: 'SF Pro',
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 14.sp,
-                                  height: 21 / 14,
-                                  color: Color(0xFF777F89),
+                                  fontSize: 16.sp,
+                                  height: 24 / 16,
+                                  color: Color(0xFF000000),
                                 ),
+                                minFontSize: 12,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 5.h),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.timer_outlined,
+                                    size: 18.r,
+                                    color: Color(0xFF777F89),
+                                  ),
+                                  SizedBox(width: 3.w),
+                                  Text(
+                                    '${(remainingSeconds ~/ 3600).toString().padLeft(2, '0')}:'
+                                    '${((remainingSeconds % 3600) ~/ 60).toString().padLeft(2, '0')}:'
+                                    '${(remainingSeconds % 60).toString().padLeft(2, '0')}',
+                                    style: TextStyle(
+                                      fontFamily: 'SF Pro',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp,
+                                      height: 21 / 14,
+                                      color: Color(0xFF777F89),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   IconButton(
                     icon: Icon(
