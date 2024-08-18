@@ -451,36 +451,34 @@ class TimerInputField extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.h),
-          Column(
-            children: [
-              Text(
-                value.toString().padLeft(2, '0'),
-                style: TextStyle(
-                  fontFamily: 'SF Pro',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 24.sp,
-                  height: 22 / 24,
-                  color: Color(0xFF000000),
-                ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: 'SF Pro',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12.sp,
-                  height: 12 / 12,
-                  color: Color(0xFF777F89),
-                ),
-              ),
-            ],
+          Text(
+            value.toString().padLeft(2, '0'),
+            style: TextStyle(
+              fontFamily: 'SF Pro',
+              fontWeight: FontWeight.w500,
+              fontSize: 24.sp,
+              height: 22 / 24,
+              color: Color(0xFF000000),
+            ),
+          ),
+          SizedBox(height: 5.h),
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'SF Pro',
+              fontWeight: FontWeight.w400,
+              fontSize: 12.sp,
+              height: 12 / 12,
+              color: Color(0xFF777F89),
+            ),
           ),
           SizedBox(height: 10.h),
           InkWell(
-            onTap: () => onChanged(value - 1),
+            onTap: () {
+              if (value > 0) {
+                onChanged(value - 1);
+              }
+            },
             borderRadius: BorderRadius.circular(3.r),
             child: Container(
               width: 32.w,

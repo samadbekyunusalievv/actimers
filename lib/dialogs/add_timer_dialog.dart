@@ -430,7 +430,11 @@ class TimerInputField extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
           InkWell(
-            onTap: () => onChanged(value - 1),
+            onTap: () {
+              if (value > 0) {
+                onChanged(value - 1);
+              }
+            },
             borderRadius: BorderRadius.circular(3.r),
             child: Container(
               width: 32.w,
